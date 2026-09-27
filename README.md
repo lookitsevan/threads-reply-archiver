@@ -19,6 +19,32 @@ It never asks for your Threads password.
 
 ---
 
+## See an example first
+
+> 🧪 **Everything in this example is made up.** The posts, accounts, and replies are fictional.
+> No real person's data is shown here.
+
+Here's what your spreadsheet looks like after the tool has been running for a bit.
+The full example file is here: **[examples/sample_archive.csv](examples/sample_archive.csv)** (GitHub shows it as a table).
+
+| Who replied | What happened | status | edited | tag |
+|---|---|---|---|---|
+| @example_cafe_owner | Asked about custom prints. A business lead! | live | | opportunity |
+| @example_troll | Left a rude comment | live | | |
+| @example_friend | ↳ Replied to the troll to defend the post | live | | |
+| @example_troll | Posted a threat, then **deleted it**. The tool kept a copy. | **missing** | | evidence |
+| @example_snacker | Changed their reply after posting. The first version is kept too. | live | **yes** | |
+| @example_prankster | Posted a trick formula. The tool made it harmless. | live | | |
+
+### What this tool can and can't see
+- ✅ Replies on **your own** posts, and nothing else.
+- ❌ It can't see your DMs, other people's posts, or your password.
+- ❌ It can't post, delete, hide, or change anything.
+- 🔒 For replies from **private accounts**, Meta hides the username and link, so those rows show up without them.
+- 💻 Everything it saves stays on **your** Mac. Nothing is sent to the author of this tool or anyone else.
+
+---
+
 ## Part 1: Get your Threads "token" (about 15 min)
 
 A token is like a key. It lets this tool read replies on your Threads posts.
