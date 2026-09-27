@@ -24,17 +24,25 @@ It never asks for your Threads password.
 > 🧪 **Everything in this example is made up.** The posts, accounts, and replies are fictional.
 > No real person's data is shown here.
 
-Here's what your spreadsheet looks like after the tool has been running for a bit.
-The full example file is here: **[examples/sample_archive.csv](examples/sample_archive.csv)** (GitHub shows it as a table).
+The example file shows what your spreadsheet looks like after the tool has been running for a bit:
+**38 replies across 4 posts**. Open it here: **[examples/sample_archive.csv](examples/sample_archive.csv)**
+(GitHub shows it as a table).
 
-| Who replied | What happened | status | edited | tag |
-|---|---|---|---|---|
-| @example_cafe_owner | Asked about custom prints. A business lead! | live | | opportunity |
-| @example_troll | Left a rude comment | live | | |
-| @example_friend | ↳ Replied to the troll to defend the post | live | | |
-| @example_troll | Posted a threat, then **deleted it**. The tool kept a copy. | **missing** | | evidence |
-| @example_snacker | Changed their reply after posting. The first version is kept too. | live | **yes** | |
-| @example_prankster | Posted a trick formula. The tool made it harmless. | live | | |
+In the example, **@example_author** is the account owner (that would be **you**).
+Every other `example_…` account is someone replying.
+
+Some highlights from the example:
+
+| Who replied | What happened | status | tag |
+|---|---|---|---|
+| @example_cafe_owner | Asked about custom prints. A business lead! | live | opportunity |
+| @example_author | ↳ The owner replied to the lead. Your own replies are saved too. | live | |
+| @example_troll | Posted a threat, then **deleted it**. The tool kept a copy. | **missing** | evidence |
+| @example_angry_guy | Hostile reply the owner **hid**. Hidden replies are still saved. | live (hidden) | evidence |
+| @example_snacker | Changed their reply after posting. The first version is kept too. | live (edited) | |
+| @example_spam_bot | Spam that got removed. Kept, and marked missing. | **missing** | spam |
+| *(no username)* | A reply from a **private account**. Meta hides who it is. | live | |
+| @example_prankster | Posted a trick formula. The tool made it harmless. | live | |
 
 ### What this tool can and can't see
 - ✅ Replies on **your own** posts, and nothing else.
