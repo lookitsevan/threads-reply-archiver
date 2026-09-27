@@ -11,6 +11,9 @@ Your password-like "token" and your saved replies stay on your Mac. Nobody else 
 **Read-only:** this tool can only *read* replies. It can't post, delete, or change anything on your account.
 It never asks for your Threads password.
 
+> ⚖️ **Not affiliated with Meta or Threads. Use at your own risk.** By using this tool, you agree
+> to follow Meta's terms. See **"Terms of use"** near the bottom.
+
 > 🛡️ **Only download this from the original link.** If someone sends you a copy another way,
 > don't run it. A changed copy could steal your token. See **"Check your download"** at the bottom.
 
@@ -172,6 +175,24 @@ That's normal. It only fills up when new or changed replies are found.
 
 ---
 
+## Terms of use (please read)
+
+- **Not made by Meta.** This is an independent tool. It is not affiliated with,
+  endorsed by, or supported by Meta or Threads. "Threads" and "Meta" are their trademarks.
+- **You agree to Meta's rules, not just mine.** This tool uses Meta's official Threads API
+  with your own developer app. By using it, you're responsible for following
+  Meta's Platform Terms, Developer Policies, and the Threads Terms of Use.
+- **Saving deleted replies is your choice and your responsibility.** This tool keeps copies
+  of replies even after their authors delete them. Meta's terms and privacy laws where you
+  live (or where your commenters live) may limit how long you can keep that data or what
+  you can do with it. Check before you rely on it.
+- **Keep what you collect private.** Replies belong to the people who wrote them. Don't
+  publish, sell, or share the archive except with police, lawyers, or when the law allows.
+- **Use at your own risk.** No warranty, no guarantees, and no liability for the author
+  (see LICENSE). Nothing here is legal advice.
+
+---
+
 ## Check your download (optional, but smart)
 This makes sure nobody changed the file before it got to you.
 1. Open **Terminal** (press **Cmd + Space**, type **Terminal**, and press Enter).
@@ -182,4 +203,5 @@ This makes sure nobody changed the file before it got to you.
 ---
 
 *Free to use and share under the MIT License (see LICENSE). Provided as-is, with no warranty.
-You're responsible for how you use and store the replies you collect.*
+Not affiliated with Meta. You're responsible for following Meta's terms and the law,
+and for how you use and store the replies you collect.*
