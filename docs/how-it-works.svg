@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-labelledby="t d">
+  <title id="t">Where your data goes</title>
+  <desc id="d">Your Threads posts are read through Meta's official API by the tool on your Mac. The tool saves replies to a spreadsheet on your Mac. Nothing is ever sent to the tool's author or anyone else.</desc>
+  <defs>
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3B6FD8"/></marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D5B"/></marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #243044; }
+    .lbl { font-size: 17px; font-weight: 600; }
+    .sub { font-size: 14px; fill: #5B6679; }
+    .zone { font-size: 16px; font-weight: 700; fill: #2E7D5B; }
+    .no { font-size: 15px; font-weight: 600; fill: #C8413B; }
+  </style>
+
+  <!-- card -->
+  <rect x="1" y="1" width="958" height="418" rx="22" fill="#F4F7FB" stroke="#DCE3EC" stroke-width="2"/>
+
+  <!-- 1. Threads posts: phone with reply bubbles -->
+  <g transform="translate(70,105)">
+    <rect x="0" y="0" width="110" height="190" rx="18" fill="#FFFFFF" stroke="#243044" stroke-width="3"/>
+    <rect x="42" y="10" width="26" height="6" rx="3" fill="#243044"/>
+    <rect x="14" y="32" width="82" height="30" rx="10" fill="#E3EAF6"/>
+    <rect x="22" y="72" width="74" height="26" rx="10" fill="#E3EAF6"/>
+    <rect x="14" y="108" width="70" height="26" rx="10" fill="#E3EAF6"/>
+    <rect x="22" y="144" width="74" height="26" rx="10" fill="#E3EAF6"/>
+    <circle cx="26" cy="47" r="7" fill="#3B6FD8"/>
+  </g>
+  <text class="lbl" x="125" y="328" text-anchor="middle">Your Threads posts</text>
+  <text class="sub" x="125" y="350" text-anchor="middle">and the replies on them</text>
+
+  <!-- arrow: read-only via Meta API -->
+  <line x1="200" y1="200" x2="352" y2="200" stroke="#3B6FD8" stroke-width="4" marker-end="url(#arrBlue)"/>
+  <text class="sub" x="276" y="182" text-anchor="middle" style="fill:#3B6FD8;font-weight:600">Read-only</text>
+  <text class="sub" x="276" y="226" text-anchor="middle">Meta's official API</text>
+
+  <!-- the boundary: stays on your Mac -->
+  <rect x="368" y="48" width="404" height="304" rx="26" fill="#EAF5EF" stroke="#2E7D5B" stroke-width="3" stroke-dasharray="10 8"/>
+  <g transform="translate(392,66)">
+    <rect x="0" y="9" width="18" height="14" rx="3" fill="#2E7D5B"/>
+    <path d="M4,10 V6 a5,5 0 0 1 10,0 V10" fill="none" stroke="#2E7D5B" stroke-width="3"/>
+  </g>
+  <text class="zone" x="420" y="87">Stays on your Mac</text>
+
+  <!-- laptop -->
+  <g transform="translate(392,140)">
+    <rect x="12" y="0" width="136" height="90" rx="8" fill="#FFFFFF" stroke="#243044" stroke-width="3"/>
+    <rect x="24" y="12" width="112" height="66" rx="3" fill="#243044"/>
+    <text x="34" y="38" style="font-family: Menlo, Consolas, monospace; font-size: 12px; fill:#8FE3B5">checking…</text>
+    <text x="34" y="58" style="font-family: Menlo, Consolas, monospace; font-size: 12px; fill:#8FE3B5">38 saved</text>
+    <path d="M0,98 H160 L150,108 H10 Z" fill="#243044"/>
+  </g>
+  <text class="lbl" x="472" y="282" text-anchor="middle">This tool</text>
+  <text class="sub" x="472" y="304" text-anchor="middle">checks every 15 min</text>
+
+  <!-- arrow laptop -> sheet -->
+  <line x1="560" y1="190" x2="596" y2="190" stroke="#2E7D5B" stroke-width="4" marker-end="url(#arrGreen)"/>
+
+  <!-- spreadsheet -->
+  <g transform="translate(608,130)">
+    <rect x="0" y="0" width="108" height="120" rx="8" fill="#FFFFFF" stroke="#243044" stroke-width="3"/>
+    <rect x="0" y="0" width="108" height="24" rx="8" fill="#2E7D5B"/>
+    <rect x="0" y="16" width="108" height="8" fill="#2E7D5B"/>
+    <g stroke="#C9D2DE" stroke-width="2">
+      <line x1="0" y1="48" x2="108" y2="48"/><line x1="0" y1="72" x2="108" y2="72"/><line x1="0" y1="96" x2="108" y2="96"/>
+      <line x1="40" y1="24" x2="40" y2="120"/><line x1="76" y1="24" x2="76" y2="120"/>
+    </g>
+    <rect x="80" y="76" width="24" height="16" rx="3" fill="#F6D9D7"/>
+  </g>
+  <text class="lbl" x="662" y="282" text-anchor="middle">Your spreadsheet</text>
+  <text class="sub" x="662" y="304" text-anchor="middle">keeps deleted replies</text>
+
+  <!-- blocked path to the author / anyone else -->
+  <line x1="774" y1="200" x2="846" y2="200" stroke="#8A94A6" stroke-width="3" stroke-dasharray="6 7"/>
+  <g transform="translate(808,200)">
+    <circle r="17" fill="#FFFFFF" stroke="#C8413B" stroke-width="4"/>
+    <line x1="-11" y1="11" x2="11" y2="-11" stroke="#C8413B" stroke-width="4"/>
+  </g>
+  <g transform="translate(884,200)" fill="none" stroke="#8A94A6" stroke-width="3">
+    <circle cx="0" cy="-28" r="16"/>
+    <path d="M-28,20 a28,26 0 0 1 56,0 Z"/>
+  </g>
+  <text class="no" x="880" y="270" text-anchor="middle">Never sent</text>
+  <text class="sub" x="880" y="292" text-anchor="middle">to the tool's author</text>
+  <text class="sub" x="880" y="312" text-anchor="middle">or anyone else</text>
+</svg>
