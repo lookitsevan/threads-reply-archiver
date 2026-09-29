@@ -40,7 +40,8 @@ The example file shows what your spreadsheet looks like after the tool has been 
 **38 replies across 4 posts**. Open it here: **[examples/sample_archive.csv](examples/sample_archive.csv)**
 (GitHub shows it as a table).
 
-In the example, **@example_author** is the account owner (that would be **you**).
+In the example, **@example_author** is the account owner (that would be **you**), and those replies
+are labeled **(your reply)**. The **has_media** column shows which replies included a photo or video.
 Every other `example_…` account is someone replying.
 
 | Who replied | What happened | status | tag |
@@ -65,13 +66,16 @@ Every file is plain text. You can open any of them in TextEdit and read it befor
 | **Start.command** | Sets everything up, then checks for replies every 15 minutes. Double-click to start. | 70 lines |
 | **Open Archive.command** | Checks for new replies right now and opens your spreadsheet. | 5 lines |
 | **Stop.command** | Turns off the 15-minute checks. Your saved replies stay. | 7 lines |
-| **threads_archiver.py** | The actual tool. Talks to Meta, saves replies, and builds the spreadsheet. | 366 lines |
+| **threads_archiver.py** | The actual tool. Talks to Meta, saves replies, and builds the spreadsheet. | 803 lines |
 | **config.example.env** | A blank template where you'll paste your key. | 6 lines |
 | **README.md** | This guide. | |
 | **LICENSE** | Free to use, no warranty. | |
 
 The download also includes an `examples` folder (the made-up sample spreadsheet) and a `docs` folder
 (the diagram above). Neither one runs anything.
+
+Once it runs, it also creates a `data` folder next to these files. That's where your spreadsheet,
+its history, and the saved copies live. It stays on your Mac.
 
 To remove it completely: double-click **Stop.command**, then delete the folder. Nothing else is left behind.
 
@@ -233,10 +237,15 @@ The columns go left to right like this:
 - **post_text** and **post_permalink**: the full post and a link to it.
 - **username** and **text**: who replied and what they said.
 - **reply_type**: `reply to post`, or `↳ reply to @someone` if they answered another comment.
-- **status**: `live` means it's still up. `missing` means it disappeared.
+- **has_media** and **media_type**: `yes` if the reply had a photo, video, or gallery, and which kind.
+  The tool notes it, but doesn't download it (see "Good to know").
+- **status**: `live` means it's still up. `live (hidden)` means it's hidden from public view.
+  `missing` means it disappeared.
 - **tag** and **notes**: **these are yours to fill in.** For example, tag replies `evidence` or `opportunity`.
 - **edited**: says `yes` if they changed it. The first version is kept in **original_text**.
+- **hide_status** shows **(your reply)** on your own replies, since Meta doesn't report hiding for those.
 - The columns at the far right are IDs and timestamps. They're for proof. You can ignore them day to day.
+- A full history of every capture, edit, and disappearance is kept in `data/events.jsonl`.
 
 Your tags and notes are kept every time the tool updates.
 If you edit in Numbers or Excel, save it as a **CSV** with the **same name**.
@@ -247,30 +256,29 @@ section you can open and close.
 
 </details>
 
-**Want to go back further in time?** Open **config.env** and change `LOOKBACK_DAYS=30` to a bigger
-number, like `120`. The first run saves all the old replies on posts from that period, not just new ones.
+**How far back does it watch?** Posts from the last 30 days are checked every 15 minutes. Older posts
+that are already in your archive are still checked **once a day**, so a reply deleted weeks later is
+still caught. To start watching further back, open **config.env** and change `LOOKBACK_DAYS=30` to a
+bigger number, like `120`. The first run saves all the old replies on posts from that period.
 
-<details><summary><b>▶ How the tool protects your evidence (reliability notes)</b></summary>
+---
 
-The archiver was independently audited in September 2026, and these guarantees were hardened:
+<details><summary><b>▶ How the tool protects your evidence</b></summary>
 
-- **Deleted posts don't lose their replies.** The 30-day window only finds *new* posts — every post
-  already in your archive is rechecked every run, even older ones.
-- **A reply is only marked `missing` after a complete scan.** Interrupted or partial page reads never
-  cause false "deleted" flags.
-- **If the tool crashes mid-run, it keeps what it already scanned.** Progress is saved after every post.
-- **Deleted photos and videos are kept too.** Attachments are downloaded to `data/media/` while they're
-  still up, so a deleted image reply still has its evidence on disk (new `media_files` column).
-- **Posts you deleted (or that Threads removed)** get an explicit `inaccessible` state instead of
-  silently freezing — their replies keep their last-known status.
-- **Hidden replies are distinguished.** The spreadsheet now shows `live (hidden)` for replies Threads
-  suppresses (hidden, covered, blocked, restricted).
-- All disappearances, reappearances, and edits are logged in an append-only history inside
-  `data/state.json`, so nothing about a reply's past gets quietly overwritten.
+Version 1.1.0 was **reviewed and hardened with help from [@sorcerai](https://github.com/sorcerai)**
+(see [pull request #1](https://github.com/lookitsevan/threads-reply-archiver/pull/1)). Thank you!
 
-**One honest caveat that can't be fixed:** `missing` means "gone from the API," not "proven deleted."
-A reply you can't see because you were blocked, or because the account went private, looks exactly
-the same as one that was deleted. Treat it as disappearance, not proof.
+- **A reply is only marked `missing` after a complete check.** If a check gets cut off partway,
+  nothing is marked missing that run.
+- **Older posts are never forgotten.** Posts past the 30-day window are rechecked once a day.
+- **Crashes don't lose work.** Progress is saved during each run.
+- **One problem post can't block the rest.** It's skipped, noted, and retried next time.
+- **Dates are stored exactly as Meta sends them,** and never erased.
+- **Easy on your computer.** It only saves when something actually changed.
+
+**One honest limit:** `missing` means "gone from Meta's system," not "proven deleted." A reply you
+can't see because you were blocked, or because the account went private, looks the same as a
+deleted one. Treat it as a disappearance, not proof.
 
 </details>
 
@@ -285,6 +293,16 @@ Press **Ctrl + C** to stop it. Then:
   If that fixes it, the VPN was blocking the connection.
 - Still stuck? [Open an issue](https://github.com/lookitsevan/threads-reply-archiver/issues/new/choose)
   with the last 10 lines of the window. **Check that your key isn't in there first.**
+
+</details>
+
+<details><summary><b>It says "could not be executed because you do not have appropriate access privileges"</b></summary>
+
+You probably downloaded with the green **Code** button, which strips the "allowed to run" setting.
+Easiest fix: download from the [latest release](https://github.com/lookitsevan/threads-reply-archiver/releases/latest) instead.
+
+Or fix your copy: open **Terminal**, type `chmod +x ` (with a space at the end), drag the three
+`.command` files into the window, and press **Enter**.
 
 </details>
 
@@ -324,10 +342,23 @@ That's normal. It only fills up when new or changed replies are found.
   fingerprint (SHA-256) that shows nothing was changed. For real threats, also take your
   own screenshots, report them in the Threads app, and contact the police. Police can
   ask Meta to save records directly, even deleted ones.
+- **Photos and videos aren't saved.** The spreadsheet shows that a reply had one, not what it showed.
+  Screenshot serious ones right away.
 - **Safety feature:** if a reply starts with `=`, the spreadsheet shows a `'` in front of it.
   This stops trick replies from running hidden commands in Excel or Numbers.
 
 </details>
+
+---
+
+## Updating to a new version
+
+1. Double-click **Stop.command**.
+2. Download the [latest release](https://github.com/lookitsevan/threads-reply-archiver/releases/latest).
+3. Copy the new files into your existing `ThreadsArchive` folder, replacing the old ones.
+   **Keep your `config.env` file and your `data` folder.** That's your key and your archive.
+4. Double-click **Start.command**. Your saved archive is upgraded automatically, and your tags and
+   notes are kept.
 
 ---
 
@@ -393,6 +424,14 @@ laws vary. See "Terms of use." This isn't legal advice.
 
 </details>
 
+<details><summary><b>Does it save photos or videos people reply with?</b></summary>
+
+No. It notes that a reply **had** a photo or video (the `has_media` column), but it doesn't download it.
+That keeps strangers' images, including anything graphic, off your computer. If an image reply is a
+serious threat, take a screenshot right away.
+
+</details>
+
 <details><summary><b>Does it cost anything?</b></summary>
 
 No. It's free, with no ads and no sign-up. The code is open for anyone to read.
@@ -436,6 +475,8 @@ police when it's serious.
 It's free, I don't collect anything, and I never will.
 
 — Evan ([@lookitsevan](https://www.threads.com/@lookitsevan))
+
+*Reviewed and hardened with help from [@sorcerai](https://github.com/sorcerai).*
 
 ---
 
