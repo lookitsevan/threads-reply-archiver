@@ -250,6 +250,30 @@ section you can open and close.
 **Want to go back further in time?** Open **config.env** and change `LOOKBACK_DAYS=30` to a bigger
 number, like `120`. The first run saves all the old replies on posts from that period, not just new ones.
 
+<details><summary><b>▶ How the tool protects your evidence (reliability notes)</b></summary>
+
+The archiver was independently audited in September 2026, and these guarantees were hardened:
+
+- **Deleted posts don't lose their replies.** The 30-day window only finds *new* posts — every post
+  already in your archive is rechecked every run, even older ones.
+- **A reply is only marked `missing` after a complete scan.** Interrupted or partial page reads never
+  cause false "deleted" flags.
+- **If the tool crashes mid-run, it keeps what it already scanned.** Progress is saved after every post.
+- **Deleted photos and videos are kept too.** Attachments are downloaded to `data/media/` while they're
+  still up, so a deleted image reply still has its evidence on disk (new `media_files` column).
+- **Posts you deleted (or that Threads removed)** get an explicit `inaccessible` state instead of
+  silently freezing — their replies keep their last-known status.
+- **Hidden replies are distinguished.** The spreadsheet now shows `live (hidden)` for replies Threads
+  suppresses (hidden, covered, blocked, restricted).
+- All disappearances, reappearances, and edits are logged in an append-only history inside
+  `data/state.json`, so nothing about a reply's past gets quietly overwritten.
+
+**One honest caveat that can't be fixed:** `missing` means "gone from the API," not "proven deleted."
+A reply you can't see because you were blocked, or because the account went private, looks exactly
+the same as one that was deleted. Treat it as disappearance, not proof.
+
+</details>
+
 ---
 
 ## If something goes wrong
